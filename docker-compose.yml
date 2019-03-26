@@ -1,0 +1,28 @@
+version: '3'
+services:
+    app:
+        build: .
+        hostname: app1_pandas
+        container_name: app1_pandas
+        restart: always
+        volumes:
+         - ./source:/root/source_container
+        stdin_open: true
+        tty: true
+        networks:
+            - pandas1_backend
+    db:
+        image: postgres:11
+        hostname: db_postgres_pandas1
+        container_name: db_postgres_pandas1
+        restart: always
+        volumes: 
+            - ./pg/data:/var/lib/postgresql/data
+        environment:
+          POSTGRES_PASSWORD: Mypass.1234
+        networks:
+         - pandas1_backend
+
+networks:
+  pandas1_backend:
+    driver: bridge
